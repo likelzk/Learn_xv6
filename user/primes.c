@@ -45,7 +45,6 @@ int main(int argc, char* argv[])
 {
     // parent to child
     int fd[2];
-    int* num;
 
     if (pipe(fd) == -1) {
         fprintf(2, "Error: pipe(fd) error.\n");
@@ -57,9 +56,8 @@ int main(int argc, char* argv[])
     // parent process
     else {   
         close(fd[0]);
-        for(int i=0;i<34;i++)
+        for(int i=2;i<=35;i++)
         {
-            num[i]=i+2;
             fprintf(0, "prime %d\n", i);
             write(fd[1],&i,4);
         }
