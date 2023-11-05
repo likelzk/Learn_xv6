@@ -16,14 +16,18 @@ int main(int argc,char* argv[])
         //父进程
         Ownpid = getpid();
         write(p[1],"a",1);
+        close(p[1]);
         read(p[0],&buff,1);
+        close(p[0]);
         printf("<%d>:received pong",Ownpid);
     }else{
         //子进程
         Ownpid = getpid();
         read(p[0],&buff,1);
+        close(p[0]);
         printf("<%d>:received ping",Ownpid);
         write(p[1],"a",1);
+        close(p[1]);
     }
 
     exit(0);
