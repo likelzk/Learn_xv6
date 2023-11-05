@@ -1,34 +1,33 @@
 #include "kernel/types.h"
-#include "user/user.h"
 #include "kernel/stat.h"
+#include "user/user.h"
 
-
-int main(int argc,char* argv[])
+int
+main(int argc, char* argv[])
 {
-    int p[2];
-    int Ownpid;
+    // parent to child
+    int fd[2];
 
-    char buff;
-
-    pipe(p);
-
-    if(fork() != 0){
-        //父进程
-        Ownpid = getpid();
-        write(p[1],"a",1);
-        close(p[1]);
-        read(p[0],&buff,1);
-        close(p[0]);
-        printf("<%d>:received pong\n",Ownpid);
-    }else{
-        //子进程
-        Ownpid = getpid();
-        read(p[0],&buff,1);
-        close(p[0]);
-        printf("<%d>:received ping\n",Ownpid);
-        write(p[1],"a",1);
-        close(p[1]);
+    if (pipe(fd) == -1) {
+        fprintf(2, "Error: pipe(fd) error.\n");
     }
+    // child process
+    if (fork() == 0){
+        char buffer[1];
+        read(fd[0], buffer, 1);
+        close(fd[0]);
+        fprintf(0, "%d: received ping\n", getpid());
+        write(fd[1], buffer, 1);
+    }
+    // parent process
+    else {
+        char buffer[1];
+        buffer[0] = 'a';
+        write(fd[1], buffer, 1);
+        close(fd[1]);
+        read(fd[0], buffer, 1);
+        fprintf(0, "%d: received pong\n", getpid());
 
+    }
     exit(0);
 }
