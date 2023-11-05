@@ -9,7 +9,7 @@ main(int argc, char *argv[])
         exit(1);
     }
 
-    int time = atoi(&argv[1]);
+    int time = atoi(argv[1]);
 
     sleep(time);
 
