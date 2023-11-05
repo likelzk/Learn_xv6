@@ -9,14 +9,14 @@ void new_proc(int fd[2])
 
     close(fd[1]);
 
-    if(read(fd[0],prime,4)!=4){
+    if(read(fd[0],&prime,4)!=4){
         fprintf(2, "Error in read.\n");
         exit(1);
     }
 
     fprintf(0, "prime %d\n",prime);
 
-    if(read(fd[0],num,4)==4){
+    if(read(fd[0],&num,4)==4){
         int newfd[2];   
         pipe(newfd);
         if(num % prime != 0)
