@@ -30,9 +30,9 @@ void new_proc(int fd[2])
             close(fd[0]);
             close(newfd[1]);
 
-        }else{
-            new_proc(newfd);
-        }   
+            }else{
+                new_proc(newfd);
+            }   
     }
 
     exit(0);
@@ -56,9 +56,9 @@ int main(int argc, char* argv[])
     // parent process
     else {   
         close(fd[0]);
-        for(int i=2;i<=35;i++)
+        fprintf(0, "prime 2\n");
+        for(int i=3;i<=35;i++)
         {
-            fprintf(0, "prime %d\n", i);
             write(fd[1],&i,4);
         }
         close(fd[1]);
