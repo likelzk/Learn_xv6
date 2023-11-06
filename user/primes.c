@@ -33,6 +33,8 @@ void new_proc(int fd[2])
             }else{
                 new_proc(newfd);
             }   
+    }else{
+        exit(0);
     }
 }
 
