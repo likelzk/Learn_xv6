@@ -59,7 +59,8 @@ int main(int argc, char* argv[])
         fprintf(0, "prime 2\n");
         for(int i=3;i<=35;i++)
         {
-            write(fd[1],&i,4);
+            if( i%2 != 0)
+             write(fd[1],&i,4);
         }
         close(fd[1]);
 //        wait(0);
