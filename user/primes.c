@@ -29,6 +29,7 @@ void new_proc(int fd[2])
             }
             close(fd[0]);
             close(newfd[1]);
+            wait(0);
             exit(0);
             }else{
                 new_proc(newfd);
@@ -63,7 +64,7 @@ int main(int argc, char* argv[])
              write(fd[1],&i,4);
         }
         close(fd[1]);
-//        wait(0);
+        wait(0);
     }
     exit(0);
 }
